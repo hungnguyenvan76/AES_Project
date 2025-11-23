@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module keyExpansion #(parameter nk=4, parameter nr=10)(key, w);
+module keyExpansion #(parameter nk=4, parameter nr=10)(key, w); // so word, so vong. AES-192: nk = 6, nr = 12. AES-256: nk = 8, nr = 14
 
 input  [(nk*32)-1:0] key;
 output reg [(128*(nr+1))-1:0] w;
@@ -34,23 +34,23 @@ reg [31:0] new;
 integer i;
 
 always @* begin
-    w = key;
+    w = key; // luu word dau tien
     for(i = nk; i < 4*(nr + 1); i = i + 1) begin
-        temp = w[31:0];
+        temp = w[31:0]; // lay key cuoi cung
 
-        if(i % nk == 0) begin
+        if(i % nk == 0) begin // bat dau 1 word moi
             rot  = rotword(temp);
             x    = subwordx(rot);
             rcon = rconx(i/nk);
             temp  = x ^ rcon;
         end
-        else if(nk > 6 && i % nk == 4) begin
+        else if(nk > 6 && i % nk == 4) begin // AES-256
             temp = subwordx(temp);
         end
 
-        new = w[(nk*32)-1:(nk*32)-32] ^ temp;
+        new = w[(nk*32)-1:(nk*32)-32] ^ temp; // lay key cach nk key ^ temp
 
-        w = w << 32;
+        w = w << 32; // dich de luu key moi
         w[31:0] = new;
     end
 end
