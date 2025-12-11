@@ -21,31 +21,31 @@
 
 
 module invShiftRows(in, out);
-input[127:0] in;
+input [127:0] in;
 output[127:0] out;
 
 // Hàng đầu (r = 0) không dịch
-assign out [0+:8]  = in[0+:8];
-assign out [32+:8] = in[32+:8];
-assign out [64+:8] = in[64+:8];
-assign out [96+:8] = in[96+:8];
+assign out[127-:8] = in[127-:8]; // col0
+assign out[95-:8]  = in[95-:8];  // col1
+assign out[63-:8]  = in[63-:8];  // col2
+assign out[31-:8]  = in[31-:8];  // col3
 
 // Hàng thứ 2 (r = 1) dịch phải 1 byte
-assign out [8+:8]   = in[104+:8];
-assign out [40+:8]  = in[8+:8];
-assign out [72+:8]  = in[40+:8];
-assign out [104+:8] = in[72+:8];
+assign out[119-:8] = in[23-:8];
+assign out[87-:8]  = in[119-:8];
+assign out[55-:8]  = in[87-:8];
+assign out[23-:8]  = in[55-:8];
 
 // Hàng thứ 3 (r = 1) dịch phải 2 byte
-assign out [16+:8]  = in[80+:8];
-assign out [48+:8]  = in[112+:8];
-assign out [80+:8]  = in[16+:8];
-assign out [112+:8] = in[48+:8];
+assign out[111-:8] = in[47-:8];
+assign out[79-:8]  = in[15-:8];
+assign out[47-:8]  = in[111-:8];
+assign out[15-:8]  = in[79-:8];
 
 // Hàng thứ 4 (r = 1) dịch phải 3 byte
-assign out [24+:8]  = in[56+:8];
-assign out [56+:8]  = in[88+:8];
-assign out [88+:8]  = in[120+:8];
-assign out [120+:8] = in[24+:8];
+assign out[103-:8] = in[71-:8];
+assign out[71-:8]  = in[39-:8];
+assign out[39-:8]  = in[7-:8];
+assign out[7-:8]   = in[103-:8];
 
 endmodule
