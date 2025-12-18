@@ -22,8 +22,9 @@
 
 module encryptRound(in, key, out);
     input  [127:0] in;
-    output [127:0] out;
     input  [127:0] key;
+    output [127:0] out;
+
     wire   [127:0] afterSubBytes;
     wire   [127:0] afterShiftRows;
     wire   [127:0] afterMixColumns;
