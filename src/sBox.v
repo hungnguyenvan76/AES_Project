@@ -5,7 +5,7 @@ output  [7:0] out;
 
 reg [7:0] out;
 
-always @(in)
+always @(*) begin
     case(in)
         8'h00: out=8'h63;
         8'h01: out=8'h7c;
@@ -264,5 +264,6 @@ always @(in)
         8'hfe: out=8'hbb;
         8'hff: out=8'h16;
     endcase
+end
 
 endmodule

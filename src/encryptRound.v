@@ -27,11 +27,10 @@ module encryptRound(in, key, out);
     wire   [127:0] afterSubBytes;
     wire   [127:0] afterShiftRows;
     wire   [127:0] afterMixColumns;
-    wire   [127:0] afterAddroundKey;
     
-    subBytes s(in,afterSubBytes);
-    shiftRows r(afterSubBytes,afterShiftRows);
-    mixColumns m(afterShiftRows,afterMixColumns);
-    addRoundKey b(afterMixColumns,out,key);
+    subBytes    s(in, afterSubBytes);
+    shiftRows   r(afterSubBytes, afterShiftRows);
+    mixColumns  m(afterShiftRows, afterMixColumns);
+    addRoundKey b(afterMixColumns, key, out);
 		
 endmodule
