@@ -24,7 +24,7 @@ wire [127:0] afterShift;
 wire [127:0] afterSub;
 
 invShiftRows isr(states[Nr-1], afterShift);
-invSubBytes  isb(afterShift, fterSubBytes);
+invSubBytes  isb(afterShift, afterSub);
 addRoundKey  ark2(afterSub, keySched[(128*(Nr+1)-1) -: 128], out);
 
 endmodule
