@@ -1,4 +1,6 @@
-module mixColumns(in, out)
+`timescale 1ns / 1ps
+
+module mixColumns(in, out);
 
 input[127:0] in;
 output[127:0] out;
@@ -6,14 +8,13 @@ output[127:0] out;
     function [7:0] xTimes;
         input[7:0] byte;
         begin
-            if(byte[7] == 1){
+            if(byte[7] == 1)
                 xTimes = (byte << 1) ^ 8'h1B; 
-            }   
             else xTimes = byte << 1;
         end
     endfunction
 
-    genvar col;
+    genvar c;
     generate
         for (c = 0; c < 4; c = c + 1) begin : mix_col
             wire [7:0] s3 = in[c*32 +: 8];

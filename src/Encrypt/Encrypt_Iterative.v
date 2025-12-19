@@ -1,12 +1,14 @@
 `timescale 1ns / 1ps
-module AES_Iterative #(parameter N = 128, parameter Nr = 10, Nk = 4) (clk, rst, start, in, key, out, done);
-input clk,
-input rst,
-input start,
-input [127:0] in,
-input [N-1:0] key,
-output reg [127:0] out,
-output reg done
+
+module Encrypt_Iterative #(parameter N = 128, parameter Nr = 10, Nk = 4) (clk, rst, start, in, key, out, done);
+
+input clk;
+input rst;
+input start;
+input [127:0] in;
+input [N-1:0] key;
+output reg [127:0] out;
+output reg done;
 
 wire [128*(Nr+1)-1:0] keySched;
 keyExpansion #(Nk, Nr) k (key, keySched);

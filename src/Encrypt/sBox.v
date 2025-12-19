@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module sBox(in, out);
 
 input   [7:0] in;

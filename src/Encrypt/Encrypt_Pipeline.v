@@ -1,12 +1,13 @@
 `timescale 1ns / 1ps
-module AES_Pipeline #(parameter N = 128, parameter Nr = 10, Nk = 4) (clk, in, key, out);
+
+module Encrypt_Pipeline #(parameter N = 128, parameter Nr = 10, Nk = 4) (clk, in, key, out);
 
 input clk;
 input [127:0] in;
 input [N-1:0] key;
 output reg [127:0] out;
-reg [127:0] state [0:Nr];
-wire [127:0] round_out [1:Nr-1];
+reg [127:0] state [Nr:0];
+wire [127:0] round_out [1:Nr];
 wire [127:0] afterSub, afterShift;
 
 wire [128*(Nr+1)-1:0] keySched;
@@ -28,10 +29,10 @@ endgenerate
 
 subBytes    s (state[Nr-1], afterSub);
 shiftRows   r (afterSub, afterShift);
-addRoundKey arkNr (afterShift, keySched[127:0], state[Nr]);
+addRoundKey arkNr (afterShift, keySched[127:0], round_out[Nr]);
 
 always @(posedge clk) begin
-    out <= state[Nr];
+    out <= round_out[Nr];
 end
 
 endmodule

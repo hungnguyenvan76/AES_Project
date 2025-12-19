@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module shiftRows(in, out);
 
 input[127:0] in;
@@ -12,7 +14,7 @@ output[127:0] out;
     // Second row is cyclically left shifted by 1 offset.
     assign out[119:112] = in[87:80];
     assign out[87:80] = in[55:48];
-    assign out[55:47] = in[23:16];
+    assign out[55:48] = in[23:16];
     assign out[23:16] = in[119:112];
 
     // Third row is cyclically left shifted by 2 offset.
@@ -21,7 +23,7 @@ output[127:0] out;
     assign out[47:40] = in[111:104];
     assign out[15:8] = in[79:72];
 
-    // Second row is cyclically left shifted by 3 offset.
+    // Last row is cyclically left shifted by 3 offset.
     assign out[103:96] = in[7:0];
     assign out[71:64] = in[103:96];
     assign out[39:32] = in[71:64];

@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module decryptRound(in, key, out);
 
 input  [127:0] in;
@@ -11,6 +13,6 @@ wire [127:0] afterAddroundKey;
 invShiftRows    isr(in, afterInvShiftRows);
 invSubBytes     isb(afterInvShiftRows, afterInvSubBytes);
 addRoundKey     ark(afterInvSubBytes, key, afterAddroundKey);
-invMixCollumns  mc(afterAddroundKey, out);
+invMixColumns   mc(afterAddroundKey, out);
 
 endmodule
