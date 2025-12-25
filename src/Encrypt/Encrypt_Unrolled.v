@@ -20,7 +20,7 @@ genvar i;
 generate
 
     for(i = 1; i < Nr; i = i+1) begin: ErU_loop
-        encryptRound eR (state[i-1], keySched[((128*(Nr+1)-1)-128*i) -: 128], state[i], 1'b0);
+        encryptRound eR (state[i-1], keySched[((128*(Nr+1)-1)-128*i) -: 128], state[i]);
     end
 
     subBytes    s     (state[Nr-1], afterSubBytes);

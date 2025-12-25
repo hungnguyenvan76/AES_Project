@@ -23,7 +23,7 @@ assign current_key = keySched[(128*(Nr+1)-1) - 128*round_cnt -: 128];
 
 wire is_last = (round_cnt == Nr);
 
-encryptRound eR (
+encryptRound_Iterative eR (
     .in(state), 
     .key(current_key), 
     .out(round_out),
