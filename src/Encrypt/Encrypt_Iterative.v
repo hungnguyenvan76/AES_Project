@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Encrypt_Iterative #(parameter N = 128, parameter Nr = 10, Nk = 4) (clk, rst, start, in, key, out, done);
+module Encrypt_Iterative #(parameter N = 128, parameter Nr = 10, parameter Nk = 4) (clk, rst, start, in, key, out, done);
 
 input clk;
 input rst;
@@ -21,16 +21,14 @@ wire [127:0] current_key;
 
 assign current_key = keySched[(128*(Nr+1)-1) - 128*round_cnt -: 128];
 
+wire is_last = (round_cnt == Nr);
+
 encryptRound eR (
     .in(state), 
     .key(current_key), 
-    .out(round_out)
+    .out(round_out),
+    .is_last_round(is_last)
 );
-
-wire [127:0] afterSub, afterShift, final_out;
-subBytes    s (state, afterSub);
-shiftRows   r (afterSub, afterShift);
-addRoundKey arkNr (afterShift, current_key, final_out);
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
@@ -53,7 +51,7 @@ always @(posedge clk or posedge rst) begin
             end
             
             else if (round_cnt == Nr) begin
-                out <= final_out;
+                out <= round_out;
                 done <= 1;
                 round_cnt <= 0;
             end
