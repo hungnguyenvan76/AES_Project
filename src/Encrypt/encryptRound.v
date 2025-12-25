@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module encryptRound(in, key, out, is_last_round);
+module encryptRound(in, key, out);
 
     input  [127:0] in;
     input  [127:0] key;

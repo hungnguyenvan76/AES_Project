@@ -17,7 +17,6 @@ module encryptRound_Iterative(in, key, out, is_last_round);
     mixColumns  m(afterShiftRows, afterMixColumns);
 
     assign data_before_addkey = (is_last_round == 1'b1) ? afterShiftRows : afterMixColumns;
-
     addRoundKey b(data_before_addkey, key, out);
 		
 endmodule
