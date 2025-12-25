@@ -2,36 +2,87 @@
 
 module Decrypt_Unrolled_tb;
 
-reg [127:0] in1;
-wire [127:0] out1;
-reg [127:0] key1;
+// ===== AES-128 =====
+reg  [127:0] ct128;
+reg  [127:0] key128;
+wire [127:0] pt128;
+reg  [127:0] exp_pt128;
 
-reg [127:0] in2;
-wire [127:0] out2;
-reg [191:0] key2;
+// ===== AES-192 =====
+reg  [127:0] ct192;
+reg  [191:0] key192;
+wire [127:0] pt192;
+reg  [127:0] exp_pt192;
 
-reg [127:0] in3;
-wire [127:0] out3;
-reg [255:0] key3;
+// ===== AES-256 =====
+reg  [127:0] ct256;
+reg  [255:0] key256;
+wire [127:0] pt256;
+reg  [127:0] exp_pt256;
 
-AES_Decrypt a(in1, key1, out1);
-AES_Decrypt #(192, 12, 6) b(in2, key2, out2);
-AES_Decrypt #(256, 14, 8) c(in3, key3, out3);
-
+// ===== DUT =====
+AES_Decrypt              dec128 (ct128, key128, pt128);
+AES_Decrypt #(192,12,6)  dec192 (ct192, key192, pt192);
+AES_Decrypt #(256,14,8)  dec256 (ct256, key256, pt256);
 
 initial begin
-    $monitor("in128= %h, key128= %h ,out128= %h", in1, key1, out1);
-    in1 = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
-    key1 = 128'h000102030405060708090a0b0c0d0e0f;
+    $display("==============================================================");
+    $display("              AES UNROLLED DECRYPTION TEST");
+    $display("==============================================================\n");
+
+    // ================= AES-128 =================
+    ct128      = 128'h3925841d_02dc09fb_dc118597_196a0b32;
+    key128     = 128'h2b7e1516_28aed2a6_abf71588_09cf4f3c;
+    exp_pt128  = 128'h3243f6a8_885a308d_313198a2_e0370734;
     #10;
-    $monitor("in192= %h, key192= %h ,out192= %h", in2, key2, out2);
-    in2 = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
-    key2 = 192'h000102030405060708090a0b0c0d0e0f1011121314151617;
+
+    $display(">> AES-128 Decryption (NIST)");
+    $display("--------------------------------------------------------------");
+    $display(" Ciphertext (Input) : %032h", ct128);
+    $display(" Key                : %032h", key128);
+    $display(" Plaintext (DUT)    : %032h", pt128);
+    $display(" Expected Plaintext : %032h", exp_pt128);
+    $display(" Result             : %s",
+                (pt128 == exp_pt128) ? "PASS" : "FAIL");
+    $display("");
+
+    // ================= AES-192 =================
+    ct192      = 128'hbc3aaab5_d97baa7b_325d7b8f_69cd7ca8;
+    key192     = 192'h000102030405060708090a0b0c0d0e0f1011121314151617;
+    exp_pt192  = 128'h3243f6a8_885a308d_313198a2_e0370734;
     #10;
-    $monitor("in256= %h, key256= %h ,out256= %h", in3, key3, out3);
-    in3 = 128'h8ea2b7ca516745bfeafc49904b496089;
-    key3 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+
+    $display(">> AES-192 Decryption");
+    $display("--------------------------------------------------------------");
+    $display(" Ciphertext (Input) : %032h", ct192);
+    $display(" Key                : %048h", key192);
+    $display(" Plaintext (DUT)    : %032h", pt192);
+    $display(" Expected Plaintext : %032h", exp_pt192);
+    $display(" Result             : %s",
+                (pt192 == exp_pt192) ? "PASS" : "FAIL");
+    $display("");
+
+    // ================= AES-256 =================
+    ct256      = 128'h9a198830_ff9a4e39_ec150154_7d4a6b1b;
+    key256     = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+    exp_pt256  = 128'h3243f6a8_885a308d_313198a2_e0370734;
     #10;
+
+    $display(">> AES-256 Decryption");
+    $display("--------------------------------------------------------------");
+    $display(" Ciphertext (Input) : %032h", ct256);
+    $display(" Key                : %064h", key256);
+    $display(" Plaintext (DUT)    : %032h", pt256);
+    $display(" Expected Plaintext : %032h", exp_pt256);
+    $display(" Result             : %s",
+                (pt256 == exp_pt256) ? "PASS" : "FAIL");
+    $display("");
+
+    $display("==============================================================");
+    $display("                DECRYPTION TEST COMPLETED");
+    $display("==============================================================");
+
+    $finish;
 end
 
 endmodule
