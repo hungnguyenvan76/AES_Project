@@ -2,25 +2,25 @@
 
 module AES_Encrypt_tb;
 
-// ===== AES-128 =====
+// ====== AES-128 ======
 reg  [127:0] pt128;
 reg  [127:0] key128;
 wire [127:0] ct128;
 reg  [127:0] exp_ct128;
 
-// ===== AES-192 =====
+// ====== AES-192 ======
 reg  [127:0] pt192;
 reg  [191:0] key192;
 wire [127:0] ct192;
 reg  [127:0] exp_ct192;
 
-// ===== AES-256 =====
+// ====== AES-256 ======
 reg  [127:0] pt256;
 reg  [255:0] key256;
 wire [127:0] ct256;
 reg  [127:0] exp_ct256;
 
-// ===== DUT =====
+// ====== DUT ======
 Encrypt_Unrolled              aes128 (pt128, key128, ct128);
 Encrypt_Unrolled #(192,12,6)  aes192 (pt192, key192, ct192);
 Encrypt_Unrolled #(256,14,8)  aes256 (pt256, key256, ct256);

@@ -2,25 +2,25 @@
 
 module Decrypt_Unrolled_tb;
 
-// ===== AES-128 =====
+// ====== AES-128 ======
 reg  [127:0] ct128;
 reg  [127:0] key128;
 wire [127:0] pt128;
 reg  [127:0] exp_pt128;
 
-// ===== AES-192 =====
+// ====== AES-192 ======
 reg  [127:0] ct192;
 reg  [191:0] key192;
 wire [127:0] pt192;
 reg  [127:0] exp_pt192;
 
-// ===== AES-256 =====
+// ====== AES-256 ======
 reg  [127:0] ct256;
 reg  [255:0] key256;
 wire [127:0] pt256;
 reg  [127:0] exp_pt256;
 
-// ===== DUT =====
+// ====== DUT ======
 AES_Decrypt              dec128 (ct128, key128, pt128);
 AES_Decrypt #(192,12,6)  dec192 (ct192, key192, pt192);
 AES_Decrypt #(256,14,8)  dec256 (ct256, key256, pt256);
